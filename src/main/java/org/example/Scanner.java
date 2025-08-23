@@ -1,11 +1,12 @@
-package org.example;
+package main.java.org.example;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.example.TokenType.*;
+
+import static main.java.org.example.TokenType.*;
 
 public class Scanner {
     private final String source;
@@ -42,7 +43,6 @@ public class Scanner {
 
     List<Token> scanTokens() {
         while (!isAtEnd()) {
-            // We are at the beginning of the next lexeme.
             start = current;
             scanToken();
         }
@@ -111,9 +111,9 @@ public class Scanner {
     private void identifier() {
         while (isAlphaNumeric(peek())) advance();
         String text = source.substring(start, current);
-        TokenType type = keywords.get(text);
+       TokenType type = keywords.get(text);
         if (type == null) type = IDENTIFIER;
-        addToken(IDENTIFIER);
+        addToken(type);
     }
     private boolean isAlpha(char c) {
         return (c >= 'a' && c <= 'z') ||

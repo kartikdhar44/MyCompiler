@@ -1,4 +1,5 @@
-package org.example;
+package main.java.org.example;
+
 
 public class Token {
     final TokenType type;

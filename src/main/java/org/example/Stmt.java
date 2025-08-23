@@ -2,22 +2,22 @@ package main.java.org.example;
 
 import java.util.List;
 
-abstract class Expr {
+abstract class Stmt {
   interface Visitor<R> {
-    R visitAssignExpr(Assign expr);
-    R visitBinaryExpr(Binary expr);
-    R visitGroupingExpr(Grouping expr);
-    R visitLiteralExpr(Literal expr);
-    R visitLogicalExpr(Logical expr);
-    R visitUnaryExpr(Unary expr);
-    R visitVariableExpr(Variable expr);
-    R visitExpressionExpr(Expression expr);
-    R visitIfExpr(If expr);
-    R visitBlockExpr(Block expr);
-    R visitPrintExpr(Print expr);
-    R visitVarExpr(Var expr);
+    R visitAssignStmt(Assign stmt);
+    R visitBinaryStmt(Binary stmt);
+    R visitGroupingStmt(Grouping stmt);
+    R visitLiteralStmt(Literal stmt);
+    R visitLogicalStmt(Logical stmt);
+    R visitUnaryStmt(Unary stmt);
+    R visitVariableStmt(Variable stmt);
+    R visitExpressionStmt(Expression stmt);
+    R visitIfStmt(If stmt);
+    R visitBlockStmt(Block stmt);
+    R visitPrintStmt(Print stmt);
+    R visitVarStmt(Var stmt);
   }
-  static class Assign extends Expr {
+  static class Assign extends Stmt {
     Assign(Token name, Expr value) {
       this.name = name;
       this.value = value;
@@ -25,13 +25,13 @@ abstract class Expr {
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitAssignExpr(this);
+      return visitor.visitAssignStmt(this);
     }
 
     final Token name;
     final Expr value;
   }
-  static class Binary extends Expr {
+  static class Binary extends Stmt {
     Binary(Expr left, Token operator, Expr right) {
       this.left = left;
       this.operator = operator;
@@ -40,38 +40,38 @@ abstract class Expr {
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitBinaryExpr(this);
+      return visitor.visitBinaryStmt(this);
     }
 
     final Expr left;
     final Token operator;
     final Expr right;
   }
-  static class Grouping extends Expr {
+  static class Grouping extends Stmt {
     Grouping(Expr expression) {
       this.expression = expression;
     }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitGroupingExpr(this);
+      return visitor.visitGroupingStmt(this);
     }
 
     final Expr expression;
   }
-  static class Literal extends Expr {
+  static class Literal extends Stmt {
     Literal(Object value) {
       this.value = value;
     }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitLiteralExpr(this);
+      return visitor.visitLiteralStmt(this);
     }
 
     final Object value;
   }
-  static class Logical extends Expr {
+  static class Logical extends Stmt {
     Logical(Expr left, Token operator, Expr right) {
       this.left = left;
       this.operator = operator;
@@ -80,14 +80,14 @@ abstract class Expr {
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitLogicalExpr(this);
+      return visitor.visitLogicalStmt(this);
     }
 
     final Expr left;
     final Token operator;
     final Expr right;
   }
-  static class Unary extends Expr {
+  static class Unary extends Stmt {
     Unary(Token operator, Expr right) {
       this.operator = operator;
       this.right = right;
@@ -95,37 +95,37 @@ abstract class Expr {
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitUnaryExpr(this);
+      return visitor.visitUnaryStmt(this);
     }
 
     final Token operator;
     final Expr right;
   }
-  static class Variable extends Expr {
+  static class Variable extends Stmt {
     Variable(Token name) {
       this.name = name;
     }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitVariableExpr(this);
+      return visitor.visitVariableStmt(this);
     }
 
     final Token name;
   }
-  static class Expression extends Expr {
+  static class Expression extends Stmt {
     Expression(Expr expression) {
       this.expression = expression;
     }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitExpressionExpr(this);
+      return visitor.visitExpressionStmt(this);
     }
 
     final Expr expression;
   }
-  static class If extends Expr {
+  static class If extends Stmt {
     If(Expr condition, Stmt thenBranch, Stmt elseBranch) {
       this.condition = condition;
       this.thenBranch = thenBranch;
@@ -134,38 +134,38 @@ abstract class Expr {
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitIfExpr(this);
+      return visitor.visitIfStmt(this);
     }
 
     final Expr condition;
     final Stmt thenBranch;
     final Stmt elseBranch;
   }
-  static class Block extends Expr {
+  static class Block extends Stmt {
     Block(List<Stmt> statements) {
       this.statements = statements;
     }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitBlockExpr(this);
+      return visitor.visitBlockStmt(this);
     }
 
     final List<Stmt> statements;
   }
-  static class Print extends Expr {
+  static class Print extends Stmt {
     Print(Expr expression) {
       this.expression = expression;
     }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitPrintExpr(this);
+      return visitor.visitPrintStmt(this);
     }
 
     final Expr expression;
   }
-  static class Var extends Expr {
+  static class Var extends Stmt {
     Var(Token name, Expr initializer) {
       this.name = name;
       this.initializer = initializer;
@@ -173,7 +173,7 @@ abstract class Expr {
 
     @Override
     <R> R accept(Visitor<R> visitor) {
-      return visitor.visitVarExpr(this);
+      return visitor.visitVarStmt(this);
     }
 
     final Token name;
